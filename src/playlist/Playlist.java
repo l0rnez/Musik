@@ -1,7 +1,11 @@
 package playlist;
 
+import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 import song.Song;
 
@@ -54,6 +58,21 @@ public class Playlist {
 		if(s == "a") {
 //			Collections.sort(content);
 		}
+	}
+
+	public void playSound() {
+		try {
+		      File file = new File("./sound.wav");
+		      AudioInputStream stream = AudioSystem.getAudioInputStream(file);
+		      Clip clip = AudioSystem.getClip();
+		      clip.open(stream);
+		      clip.start();
+		      Thread.sleep(500);
+		      stream.close();
+		 
+		    } catch (Exception ex) {
+		      System.out.println(ex.getMessage());
+		    }
 	}
 
 	@Override
