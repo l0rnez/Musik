@@ -25,6 +25,8 @@ public class Musikverwaltung {
 			StringBuilder sb = new StringBuilder("\n");
 			for(int i = 0; i<list.size(); i++) {
 				sb.append(list.get(i).getInterpreter() + " - " + list.get(i).getTitle() + "\n");
+				
+				//sollte man ändern, ist aber lustig
 				playlist.playSound();
 			}
 			System.out.println(sb);
