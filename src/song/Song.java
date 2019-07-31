@@ -6,9 +6,17 @@ public class Song {
 	String interpreter;
 	String genre;
 
-	public Song(String title, String interpreter) {
+	public Song(String title, String interpreter, String Genre) {
 		this.title = title;
 		this.interpreter = interpreter;
+	}
+
+	public String getGenre() {
+		return genre;
+	}
+
+	public void setGenre(String genre) {
+		this.genre = genre;
 	}
 
 	public String getTitle() {
