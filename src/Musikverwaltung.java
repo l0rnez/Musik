@@ -1,6 +1,7 @@
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Scanner;
+import gui.MainFrame;
 
 import playlist.Playlist;
 import song.Song;
@@ -16,6 +17,14 @@ public class Musikverwaltung {
 	
 		playlist.addSong(song1, song2, song3, song4);
 //		System.out.println(playlist.toString());
+
+		MainFrame frame=new MainFrame();
+		frame.setTitle("Musikverwaltung");
+		frame.setSize(1000, 620);
+		frame.setResizable(false);
+		frame.setLocation(50, 50);
+		frame.setVisible(true);
+		frame.initComponents();
 
 		System.out.println("Suche: ");
 		Scanner scanner = new Scanner(System.in);
