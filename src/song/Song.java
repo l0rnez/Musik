@@ -6,9 +6,10 @@ public class Song {
 	String interpreter;
 	String genre;
 
-	public Song(String title, String interpreter, String Genre) {
+	public Song(String title, String interpreter, String genre) {
 		this.title = title;
 		this.interpreter = interpreter;
+		this.genre = genre;
 	}
 
 	public String getGenre() {
