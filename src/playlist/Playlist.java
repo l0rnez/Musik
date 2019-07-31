@@ -48,6 +48,7 @@ public class Playlist {
 				}
 				if(b != d && c != d) {
 					searchResults.remove(song);
+					break;
 				}
 			}
 		}
