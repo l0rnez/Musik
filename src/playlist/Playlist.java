@@ -14,6 +14,7 @@ public class Playlist {
 	String name;
 	String genre;
 	ArrayList<Song> content = new ArrayList<>();
+	String interpreter;
 
 	public Playlist(String name) {
 		this.name = name;
@@ -83,5 +84,43 @@ public class Playlist {
 			sb.append(content.get(i).getInterpreter() + " - " + content.get(i).getTitle() + "\n");
 		}
 		return "Playlist: " + sb;
+	}
+	
+	
+	
+	public ArrayList<Song> createPlaylistInterpreter(String searchinterpreter) {
+		ArrayList<Song> searchResult = new ArrayList<Song>();
+		
+		//Content wird durchsucht nach Interpreten, Songs von diesem Interpreten landen in searchResult
+		for(int i = 0; i < content.size(); i++) {
+			Song song = content.get(i);
+			String interpreter = content.get(i).getInterpreter();
+			
+			if(searchinterpreter == interpreter) {
+				searchResult.add(song);
+			}	
+		}
+		
+		
+		
+		return null;  //noch ändern
+	}
+	
+	public ArrayList<Song> createPlaylistGenre(String searchgenre) {
+		ArrayList<Song> searchResult = new ArrayList<Song>();
+		
+		//Content wird durchsucht nach Interpreten, Songs von diesem Interpreten landen in searchResult
+		for(int i = 0; i < content.size(); i++) {
+			Song song = content.get(i);
+			String Genre = content.get(i).getGenre();
+			
+			if(searchgenre == Genre) {
+				searchResult.add(song);
+			}	
+		}
+		
+		
+		
+		return null;  //noch ändern
 	}
 }
