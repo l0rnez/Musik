@@ -2,6 +2,8 @@ package playlist;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -13,7 +15,7 @@ public class Playlist {
 
 	String name;
 	String genre;
-	ArrayList<Song> content = new ArrayList<>();
+	public ArrayList<Song> content = new ArrayList<>();
 	String interpreter;
 
 	public Playlist(String name) {
@@ -61,7 +63,53 @@ public class Playlist {
 //			Collections.sort(content);
 		}
 	}
+	
+	public void TsortAbc()
+	{
+		Collections.sort(content,new Comparator<Song>() 
+		{
+			@Override
+			public int compare(Song s1, Song s2) 
+			{
+				int comparison=0;
+				comparison=s1.getTitle().compareTo(s2.getTitle());
+				return comparison;
+			}
+			
+		});
+	}
 
+	public void IsortAbc()
+	{
+		Collections.sort(content,new Comparator<Song>() 
+		{
+			@Override
+			public int compare(Song s1, Song s2) 
+			{
+				int comparison=0;
+				comparison=s1.getInterpreter().compareTo(s2.getInterpreter());
+				return comparison;
+			}
+			
+		});
+	}
+	
+	public void GsortAbc()
+	{
+		Collections.sort(content,new Comparator<Song>() 
+		{
+			@Override
+			public int compare(Song s1, Song s2) 
+			{
+				int comparison=0;
+				comparison=s1.getGenre().compareTo(s2.getGenre());
+				return comparison;
+			}	
+		});
+	}
+	
+	
+	
 	public void playSound() {
 		try {
 		      File file = new File("./sound.wav");
