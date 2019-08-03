@@ -10,14 +10,15 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 
 public class MainFrame extends JFrame{
 	private JButton bLinks, bRechts, bMitte;
 	private JLabel label1;
 	private JFrame jframe1;
-	private JList liste;
-	private JPanel panelmenu;
+	private JTable tabelle;
+	private JPanel panelmenu, panelliste;
 	private JMenu songs, genre, interpreter, playlists;
 	private JMenuBar menubar;
 	private JTextField searchbar;
@@ -26,7 +27,6 @@ public class MainFrame extends JFrame{
 	
 	//Probleme:
 	//1. Warum zum fick ist das Fenster leer, wenn man es öffnet, aber füllt sich, wenn man es größer macht?
-	
 	
 	
 	public MainFrame(){
@@ -38,6 +38,16 @@ public class MainFrame extends JFrame{
 		this.getContentPane().setBackground(Color.getHSBColor((float) 0.55, (float) 0.7, (float) 0.8));
 		//setResizable(false);    //an sich gut, aber geht nicht, wenn die Komponenten nicht auftauchen
 		
+	//Tabelle test
+	String[] titles = {"Titel","Interpreten","Genre"};
+	
+	Object[] [] data = {{"Peters Kackhaus", "Peter der Kacker", "Deathmetal"}, {"All the leaves are white", "White Powerranger", "Melodic Hardcore Punk"}};
+		
+		
+		
+		
+		
+		
 		//Fonts
 		Font f1 = new Font(Font.SERIF, Font.PLAIN, 15);
 		
@@ -46,28 +56,35 @@ public class MainFrame extends JFrame{
 		panelmenu.setLayout(new FlowLayout());
 		panelmenu.setBounds(10, 10, 765, 37);
 		
+		panelliste = new JPanel();
+		panelliste.setBounds(10, 50, 500, 500);
+		
 		menubar = new JMenuBar();
 		//menubar.setBounds(10, 10, 770, 50);
 		
-		//Menüpunkte
-		songs = new JMenu("Songs");
-		songs.setFont(f1);
+			//Menüpunkte
+			songs = new JMenu("Songs");
+			songs.setFont(f1);
+			
+			genre= new JMenu("Genre");
+			genre.setFont(f1);
+			
+			interpreter = new JMenu("Interpreten");
+			interpreter.setFont(f1);
+			
+			playlists = new JMenu("Playlists");
+			playlists.setFont(f1);
 		
-		genre= new JMenu("Genre");
-		genre.setFont(f1);
-		
-		interpreter = new JMenu("Interpreten");
-		interpreter.setFont(f1);
-		
-		playlists = new JMenu("Playlists");
-		playlists.setFont(f1);
 		
 		
-		
-		//Searchbar
-		searchbar = new JTextField("Was möchten sie suchen?");
-		//mouselistener damit bei klick der Text "was mchten sie..." verschwindet
-		
+			//Searchbar
+			searchbar = new JTextField("Was möchten sie suchen?");
+			//mouselistener damit bei klick der Text "was mchten sie..." verschwindet
+			
+		//Songtabelle
+		tabelle = new JTable(data, titles);
+		tabelle.setBounds(10, 50, 500, 500);
+			
 		
 		
 		//Einfügen ins Fenster
@@ -80,7 +97,12 @@ public class MainFrame extends JFrame{
 		panelmenu.add(searchbar);
 		
 		
+		
+		panelliste.add(tabelle);
+		
+		
 		add(panelmenu);
+		add(tabelle);
 		
 		
 	}
