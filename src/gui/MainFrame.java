@@ -10,6 +10,7 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
@@ -22,6 +23,7 @@ public class MainFrame extends JFrame{
 	private JMenu songs, genre, interpreter, playlists;
 	private JMenuBar menubar;
 	private JTextField searchbar;
+	private JScrollPane scroll;
 
 	
 	
@@ -38,12 +40,14 @@ public class MainFrame extends JFrame{
 		this.getContentPane().setBackground(Color.getHSBColor((float) 0.55, (float) 0.7, (float) 0.8));
 		//setResizable(false);    //an sich gut, aber geht nicht, wenn die Komponenten nicht auftauchen
 		
+		
+		
+		
 	//Tabelle test
 	String[] titles = {"Titel","Interpreten","Genre"};
 	
 	Object[] [] data = {{"Peters Kackhaus", "Peter der Kacker", "Deathmetal"}, {"All the leaves are white", "White Powerranger", "Melodic Hardcore Punk"}};
-		
-		
+	//Zahlen automatisch erzeugen	
 		
 		
 		
@@ -54,7 +58,7 @@ public class MainFrame extends JFrame{
 		//Erstellen der Komponenten
 		panelmenu = new JPanel();
 		panelmenu.setLayout(new FlowLayout());
-		panelmenu.setBounds(10, 10, 765, 37);
+		panelmenu.setBounds(10, 10, 760, 37);
 		
 		panelliste = new JPanel();
 		panelliste.setBounds(10, 50, 500, 500);
@@ -78,14 +82,15 @@ public class MainFrame extends JFrame{
 		
 		
 			//Searchbar
-			searchbar = new JTextField("Was möchten sie suchen?");
+			searchbar = new JTextField("Was m�chten sie suchen?");
 			//mouselistener damit bei klick der Text "was mchten sie..." verschwindet
 			
 		//Songtabelle
 		tabelle = new JTable(data, titles);
-		tabelle.setBounds(10, 50, 500, 500);
-			
+		//tabelle.setBounds(10, 50, 500, 500);
 		
+		scroll = new JScrollPane(tabelle);
+		scroll.setBounds(10, 50, 760, 400);
 		
 		//Einfügen ins Fenster
 		menubar.add(songs);   //schauen ob das alle in eine Zeile geht
@@ -98,11 +103,10 @@ public class MainFrame extends JFrame{
 		
 		
 		
-		panelliste.add(tabelle);
+		//panelliste.add(tabelle);
 		
-		
+		add(scroll);
 		add(panelmenu);
-		add(tabelle);
 		
 		
 	}
