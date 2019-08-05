@@ -3,16 +3,23 @@ package gui;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+
+import song.Song;
+import playlist.Playlist;
 
 public class MainFrame extends JFrame{
 	private JButton bLinks, bRechts, bMitte;
@@ -24,7 +31,23 @@ public class MainFrame extends JFrame{
 	private JMenuBar menubar;
 	private JTextField searchbar;
 	private JScrollPane scroll;
+	private	JMenuItem genrepop;
+	
 
+	//Funktionen im GUI
+	public void popupInterpreter(ArrayList<String> interpreter) {
+		StringBuilder name = new StringBuilder("interpret");
+		
+		for(int i = 0; i < interpreter.size(); i++) {
+			String interpreterhier = interpreter.get(i);
+			String keck = name.append(i).toString();
+			JMenuItem keck = new JMenuItem(interpreterhier);
+		}
+	}
+	
+	
+	
+	
 	
 	
 	//Probleme:
@@ -49,6 +72,12 @@ public class MainFrame extends JFrame{
 	Object[] [] data = {{"Peters Kackhaus", "Peter der Kacker", "Deathmetal"}, {"All the leaves are white", "White Powerranger", "Melodic Hardcore Punk"}};
 	//Zahlen automatisch erzeugen	
 		
+	
+	//Menulisten
+		//Liste der Interpreten
+		ArrayList<String> interpreten = new ArrayList<String>();
+		Playlist interpretendata = new Playlist("Daten Interpreten");
+		interpreten = interpretendata.getAllInterpreter();
 		
 		
 		
@@ -79,6 +108,8 @@ public class MainFrame extends JFrame{
 			playlists = new JMenu("Playlists");
 			playlists.setFont(f1);
 		
+				//Pop-Up menu
+				gernepop = new JMenuItem("Reggea");
 		
 		
 			//Searchbar
@@ -98,6 +129,8 @@ public class MainFrame extends JFrame{
 		menubar.add(genre);
 		menubar.add(interpreter);
 		
+		genre.add(gernepop);
+		
 		panelmenu.add(menubar);
 		panelmenu.add(searchbar);
 		
@@ -107,6 +140,7 @@ public class MainFrame extends JFrame{
 		
 		add(scroll);
 		add(panelmenu);
+		
 		
 		
 	}

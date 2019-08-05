@@ -171,4 +171,15 @@ public class Playlist {
 		
 		return null;  //noch ändern
 	}
+	
+	//packt alle Interpreten in eine Liste
+		public ArrayList<String> getAllInterpreter() {
+				
+			ArrayList<String> liste = new ArrayList<String>();
+				
+			for(int i = 0; i< content.size(); i++) {
+				liste.add(i, content.get(i).getInterpreter());
+			}
+			return liste;
+		}
 }
