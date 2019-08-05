@@ -1,8 +1,12 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.ComponentOrientation;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -18,11 +22,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
+import Main.Musikverwaltung;
 import song.Song;
 import playlist.Playlist;
+import gui.AddMusic;
 
-public class MainFrame extends JFrame{
-	private JButton bLinks, bRechts, bMitte;
+public class MainFrame extends JFrame implements ActionListener{
+	private JButton bLinks, bRechts, bMitte, bAddMusic;
 	private JLabel label1;
 	private JFrame jframe1;
 	private JTable tabelle;
@@ -35,7 +41,7 @@ public class MainFrame extends JFrame{
 	
 
 	//Funktionen im GUI
-	public void popupInterpreter(ArrayList<String> interpreter) {
+	/*public void popupInterpreter(ArrayList<String> interpreter) {
 		StringBuilder name = new StringBuilder("interpret");
 		
 		for(int i = 0; i < interpreter.size(); i++) {
@@ -43,16 +49,16 @@ public class MainFrame extends JFrame{
 			String keck = name.append(i).toString();
 			JMenuItem keck = new JMenuItem(interpreterhier);
 		}
-	}
+	}*/
 	
 	
-	
+	AddMusic frame2 = new AddMusic();  //k�nnte man eventuell anders l�sen
 	
 	
 	
 	//Probleme:
 	//1. Warum zum fick ist das Fenster leer, wenn man es öffnet, aber füllt sich, wenn man es größer macht?
-	
+	//2. Warum muss Actionlistener (ganz unten) geaddet werden, damit der sich nicht beschwert
 	
 	public MainFrame(){
 		setLayout(null);
@@ -107,9 +113,13 @@ public class MainFrame extends JFrame{
 			
 			playlists = new JMenu("Playlists");
 			playlists.setFont(f1);
+			
+			bAddMusic = new JButton("Add");
+			bAddMusic.setFont(f1);
+			bAddMusic.setAlignmentX(Component.LEFT_ALIGNMENT); //macht nichts, Knopf soll nach ganz links
 		
 				//Pop-Up menu
-				gernepop = new JMenuItem("Reggea");
+				genrepop = new JMenuItem("Reggea");
 		
 		
 			//Searchbar
@@ -128,11 +138,15 @@ public class MainFrame extends JFrame{
 		menubar.add(playlists);
 		menubar.add(genre);
 		menubar.add(interpreter);
+		menubar.add(bAddMusic);
 		
-		genre.add(gernepop);
+		genre.add(genrepop);
 		
+		
+		panelmenu.add(bAddMusic);
 		panelmenu.add(menubar);
 		panelmenu.add(searchbar);
+		
 		
 		
 		
@@ -143,5 +157,23 @@ public class MainFrame extends JFrame{
 		
 		
 		
+		//Actionlistener
+		bAddMusic.addActionListener(new java.awt.event.ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				frame2.setVisible(true);
+			}
+			
+		});
+		
+		
 	}
+
+
+	//Warum muss das geaddet werden, damit der sich nicht beschwert
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

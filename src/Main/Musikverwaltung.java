@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import gui.AddMusic;
 import gui.MainFrame;
 import playlist.Playlist;
 import song.Song;
@@ -14,7 +15,6 @@ public class Musikverwaltung{
 		
 		
 		MainFrame frame = new MainFrame();
-		
 		
 		/*
 		System.out.println("Suche: ");
