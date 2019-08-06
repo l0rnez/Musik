@@ -8,6 +8,8 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -52,12 +54,12 @@ public class MainFrame extends JFrame implements ActionListener{
 	}*/
 	
 	
-	AddMusic frame2 = new AddMusic();  //k�nnte man eventuell anders l�sen
+	AddMusic frame2 = new AddMusic();  //könnte man eventuell anders lösen
 	
 	
 	
 	//Probleme:
-	//1. Warum zum fick ist das Fenster leer, wenn man es öffnet, aber füllt sich, wenn man es größer macht?
+	//1. Warum zum fick ist das Fenster leer, wenn man es Ã¶ffnet, aber fÃ¼llt sich, wenn man es grÃ¶ÃŸer macht?
 	//2. Warum muss Actionlistener (ganz unten) geaddet werden, damit der sich nicht beschwert
 	
 	public MainFrame(){
@@ -101,7 +103,7 @@ public class MainFrame extends JFrame implements ActionListener{
 		menubar = new JMenuBar();
 		//menubar.setBounds(10, 10, 770, 50);
 		
-			//Menüpunkte
+			//MenÃ¼punkte
 			songs = new JMenu("Songs");
 			songs.setFont(f1);
 			
@@ -123,7 +125,7 @@ public class MainFrame extends JFrame implements ActionListener{
 		
 		
 			//Searchbar
-			searchbar = new JTextField("Was m�chten sie suchen?");
+			searchbar = new JTextField("Was möchten sie suchen?");
 			//mouselistener damit bei klick der Text "was mchten sie..." verschwindet
 			
 		//Songtabelle
@@ -133,7 +135,7 @@ public class MainFrame extends JFrame implements ActionListener{
 		scroll = new JScrollPane(tabelle);
 		scroll.setBounds(10, 50, 760, 400);
 		
-		//Einfügen ins Fenster
+		//EinfÃ¼gen ins Fenster
 		menubar.add(songs);   //schauen ob das alle in eine Zeile geht
 		menubar.add(playlists);
 		menubar.add(genre);
@@ -166,7 +168,13 @@ public class MainFrame extends JFrame implements ActionListener{
 			
 		});
 		
-		
+		addWindowListener(new WindowAdapter() {
+	            @Override
+	            public void windowClosing(WindowEvent e) {
+	                System.out.println("Closed");
+	                e.getWindow().dispose();
+	               }
+	     	});
 	}
 
 
