@@ -14,18 +14,18 @@ public class data {
 		this.name = name;
 	}
 	
-	Playlist rap = new Playlist("Rap");
+	public void contentAdd(String title, String interpreter, String genre) {
+		content.add(new Song(title,interpreter,genre));
+	}
 	
-	Playlist playlist = new Playlist("Rap");
-	Song song1 = new Song("Hallo", "Ckarsten", "Metal");
-	Song song2 = new Song("Haus", "Hans", "Hip-Hop");
-	Song song3 = new Song("Morgen", "Ckarsten", "Minimal german dark Techno");
-	Song song4 = new Song("Gut", "Peter", "progressiv underground psy House");
 
 	
 	
 	
 	
+	public ArrayList<Song> getContent() {
+		return content;
+	}
 
 	//packt alle Interpreten in eine Liste
 	public ArrayList<String> getAllInterpreter() {
@@ -36,5 +36,48 @@ public class data {
 			liste.add(i, content.get(i).getInterpreter());
 		}
 		return liste;
+	}
+	
+	//packt alle Genre in eine Liste
+	public ArrayList<String> getAllGenre() {
+		
+		ArrayList<String> liste = new ArrayList<String>();
+			
+		for(int i = 0; i< content.size(); i++) {
+			liste.add(i, content.get(i).getGenre());
+		}
+		return liste;
+	}
+	
+	
+	
+	public ArrayList<Song> searchSong(String s) {
+		ArrayList<Song> searchResults = new ArrayList<>();
+		for(int i = 0; i<content.size(); i++) {
+			Song song = content.get(i);
+			int l = 0;
+			if(s.length() > song.getTitle().length()) {
+				l = song.getTitle().length();
+			}
+			else {
+				l = s.length(); 
+			}
+			for(int j = 0; j<l; j++) {
+				char c = song.getTitle().charAt(j);
+				char b = song.getInterpreter().charAt(j);
+				char d = s.charAt(j);
+				if(c == d && !searchResults.contains(song)) {
+					searchResults.add(song);
+				}
+				if(b == d && !searchResults.contains(song)) {
+					searchResults.add(song);
+				}
+				if(b != d && c != d) {
+					searchResults.remove(song);
+					break;
+				}
+			}
+		}
+		return searchResults;
 	}
 }

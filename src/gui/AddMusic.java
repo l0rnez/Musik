@@ -31,7 +31,7 @@ public class AddMusic extends JFrame implements ActionListener{
 	label2 = new JLabel("Interpret:");
 	label3 = new JLabel("Genre:");
 	
-	field1 = new JTextField("                        ");
+	field1 = new JTextField("                        ");  //noch ändern, Felder so größer machen
 	field2 = new JTextField("                        ");
 	field3 = new JTextField("                        ");
 	
