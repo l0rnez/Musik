@@ -1,68 +1,48 @@
 package gui;
 
+import java.awt.BorderLayout;
+import java.awt.Button;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.ComponentOrientation;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import javax.swing.Action;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
+import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-import Main.Musikverwaltung;
-import song.Song;
-import playlist.Playlist;
-import gui.AddMusic;
-
-public class MainFrame extends JFrame implements ActionListener{
-	private JButton bLinks, bRechts, bMitte, bAddMusic;
+public class MainFrame extends JFrame{
+	private JButton bLinks, bRechts, bMitte,play,stop,shuffle;
 	private JLabel label1;
-	private JFrame jframe1;
+	private JFrame jframe1,PlayerFrame;
 	private JTable tabelle;
 	private JPanel panelmenu, panelliste;
 	private JMenu songs, genre, interpreter, playlists;
 	private JMenuBar menubar;
 	private JTextField searchbar;
 	private JScrollPane scroll;
-	private	JMenuItem genrepop;
-	
-
-	//Funktionen im GUI
-	/*public void popupInterpreter(ArrayList<String> interpreter) {
-		StringBuilder name = new StringBuilder("interpret");
-		
-		for(int i = 0; i < interpreter.size(); i++) {
-			String interpreterhier = interpreter.get(i);
-			String keck = name.append(i).toString();
-			JMenuItem keck = new JMenuItem(interpreterhier);
-		}
-	}*/
-	
-	
-	AddMusic frame2 = new AddMusic();  //könnte man eventuell anders lösen
-	
-	
+	private JProgressBar fortschritt;
+	int songl�nge=10;
 	
 	//Probleme:
-	//1. Warum zum fick ist das Fenster leer, wenn man es Ã¶ffnet, aber fÃ¼llt sich, wenn man es grÃ¶ÃŸer macht?
-	//2. Warum muss Actionlistener (ganz unten) geaddet werden, damit der sich nicht beschwert
+	//1. Warum zum fick ist das Fenster leer, wenn man es öffnet, aber füllt sich, wenn man es größer macht?
 	
-	public MainFrame(){
+	
+	public MainFrame()
+	{
 		setLayout(null);
 		setVisible(true);
 		setSize(800, 600);
@@ -77,15 +57,10 @@ public class MainFrame extends JFrame implements ActionListener{
 	//Tabelle test
 	String[] titles = {"Titel","Interpreten","Genre"};
 	
+	
 	Object[] [] data = {{"Peters Kackhaus", "Peter der Kacker", "Deathmetal"}, {"All the leaves are white", "White Powerranger", "Melodic Hardcore Punk"}};
 	//Zahlen automatisch erzeugen	
 		
-	
-	//Menulisten
-		//Liste der Interpreten
-		ArrayList<String> interpreten = new ArrayList<String>();
-		Playlist interpretendata = new Playlist("Daten Interpreten");
-		interpreten = interpretendata.getAllInterpreter();
 		
 		
 		
@@ -103,7 +78,7 @@ public class MainFrame extends JFrame implements ActionListener{
 		menubar = new JMenuBar();
 		//menubar.setBounds(10, 10, 770, 50);
 		
-			//MenÃ¼punkte
+			//Menüpunkte
 			songs = new JMenu("Songs");
 			songs.setFont(f1);
 			
@@ -115,40 +90,98 @@ public class MainFrame extends JFrame implements ActionListener{
 			
 			playlists = new JMenu("Playlists");
 			playlists.setFont(f1);
-			
-			bAddMusic = new JButton("Add");
-			bAddMusic.setFont(f1);
-			bAddMusic.setAlignmentX(Component.LEFT_ALIGNMENT); //macht nichts, Knopf soll nach ganz links
 		
-				//Pop-Up menu
-				genrepop = new JMenuItem("Reggea");
 		
 		
 			//Searchbar
-			searchbar = new JTextField("Was möchten sie suchen?");
+			searchbar = new JTextField("Was m�chten sie suchen?");
 			//mouselistener damit bei klick der Text "was mchten sie..." verschwindet
 			
 		//Songtabelle
 		tabelle = new JTable(data, titles);
-		//tabelle.setBounds(10, 50, 500, 500);
+		tabelle.setBounds(10, 50, 500, 500);
 		
 		scroll = new JScrollPane(tabelle);
 		scroll.setBounds(10, 50, 760, 400);
 		
-		//EinfÃ¼gen ins Fenster
+		
+		//Player
+		JPanel Player = new JPanel();
+		Player.setBounds(10, 450, 760, 50);
+		Player.setLayout(new BorderLayout());
+		Player.setBackground(Color.white);
+		
+		fortschritt = new JProgressBar(0,songl�nge);
+		fortschritt.setValue(0);
+		fortschritt.setStringPainted(true);
+		
+		play = new JButton();
+		play.setOpaque(false);
+		play.setContentAreaFilled(false);
+		play.setBorderPainted(false);
+		play.setIcon(new ImageIcon("play.jpg"));
+		play.addActionListener(new ActionListener() 
+		{
+				public void actionPerformed(ActionEvent ae)
+				{
+					Timer t = new Timer();
+					
+						if(fortschritt.getValue()<songl�nge)
+						{
+							t.scheduleAtFixedRate(new TimerTask() {
+
+								@Override
+								public void run() 
+								{
+									fortschritt.setValue(fortschritt.getValue()+1);
+									
+								}
+								
+							}, 0, 1000);
+						}
+						else 
+						{
+							fortschritt.setValue(0);
+							
+						}
+					
+			}
+		});
+		
+		
+		
+		stop = new JButton();
+		stop.setOpaque(false);
+		stop.setContentAreaFilled(false);
+		stop.setBorderPainted(false);
+		stop.setIcon(new ImageIcon("stop.png"));
+		stop.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent ae)
+			{
+				fortschritt.setValue(0);
+			}
+		});
+		
+	
+		
+		shuffle = new JButton("shuffle");
+		Player.add(play,BorderLayout.WEST);
+		Player.add(stop,BorderLayout.EAST);
+		Player.add(fortschritt,BorderLayout.CENTER);
+		//Player.add(shuffle,BorderLayout.WEST );
+		
+		
+		
+		
+		//Einfügen ins Fenster
 		menubar.add(songs);   //schauen ob das alle in eine Zeile geht
 		menubar.add(playlists);
 		menubar.add(genre);
 		menubar.add(interpreter);
-		menubar.add(bAddMusic);
 		
-		genre.add(genrepop);
-		
-		
-		panelmenu.add(bAddMusic);
 		panelmenu.add(menubar);
 		panelmenu.add(searchbar);
-		
 		
 		
 		
@@ -156,32 +189,7 @@ public class MainFrame extends JFrame implements ActionListener{
 		
 		add(scroll);
 		add(panelmenu);
-		
-		
-		
-		//Actionlistener
-		bAddMusic.addActionListener(new java.awt.event.ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				frame2.setVisible(true);
-			}
-			
-		});
-		
-		addWindowListener(new WindowAdapter() {
-	            @Override
-	            public void windowClosing(WindowEvent e) {
-	                System.out.println("Closed");
-	                e.getWindow().dispose();
-	               }
-	     	});
-	}
-
-
-	//Warum muss das geaddet werden, damit der sich nicht beschwert
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		add(Player);
 		
 	}
-
 }
