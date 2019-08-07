@@ -1,8 +1,9 @@
--Musik abspielen
 -GUI
 -Sortieralgorithmen: der Playlists, nach Genre, Interpret, etc.
 -automatische Erstellung von Playlisten nach bestimmten Kriterien, z.B. Interpret
+-Searchbar im GUI
+-Abspielen von Titeln wenn man diese anklickt im GUI
+-Hinzufügen von Titeln via das "Add"-Knopfes
+-Playlisten per Hand erstellen können
 
-Lorenz: Musik abspielen
-Leon:   Sortieralgorithmen
-Martin: automatischer Erstellung von Playlists
+
