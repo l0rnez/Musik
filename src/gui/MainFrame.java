@@ -33,7 +33,7 @@ import playlist.Playlist;
 import gui.AddMusic;
 
 public class MainFrame extends JFrame implements ActionListener{
-	private JButton bLinks, bRechts, bMitte, bAddMusic;
+	private JButton bAktualisieren, bAddMusic;
 	private JLabel label1;
 	private JFrame jframe1;
 	private JTable tabelle, tabelleinterpreten, tabellegenre, tabellesuchergebnisse;
@@ -43,19 +43,34 @@ public class MainFrame extends JFrame implements ActionListener{
 	private JTextField searchbar;
 	private JScrollPane scroll, scrollinterpreten, scrollgenre, scrollsuche;
 	
-
+	
+	
+	ArrayList<Song> alleshier = new ArrayList<Song>();
+	String[] [] daten = null;
+	
+	
 	//Funktionen im GUI
-	/*public void popupInterpreter(ArrayList<String> interpreter) {
-		StringBuilder name = new StringBuilder("interpret");
+	public String[] [] druckenTabelle(ArrayList<Song> neu) {
+		alleshier = neu;
+		ArrayList<String> titles = new ArrayList<String>();
+		ArrayList<String> genra = new ArrayList<String>();
+		ArrayList<String> interpreters = new ArrayList<String>();
 		
-		for(int i = 0; i < interpreter.size(); i++) {
-			String interpreterhier = interpreter.get(i);
-			String keck = name.append(i).toString();
-			JMenuItem keck = new JMenuItem(interpreterhier);
+		String[] [] daten = new String [alleshier.size()] [3];
+		
+		for(int i = 0; i < alleshier.size(); i++) {
+			titles.add(alleshier.get(i).getTitle());
+			genra.add(alleshier.get(i).getGenre());
+			interpreters.add(alleshier.get(i).getInterpreter());
 		}
-	}*/
-	
-	
+		
+		for(int i = 0; i < titles.size(); i++) {
+			daten[i] [0] = titles.get(i);
+			daten[i] [1] = interpreters.get(i);
+			daten[i] [2] = genra.get(i);
+		}
+		return daten;
+	}
 	
 	
 	
@@ -70,6 +85,13 @@ public class MainFrame extends JFrame implements ActionListener{
 	//Probleme:
 	//1. Warum zum fick ist das Fenster leer, wenn man es Ã¶ffnet, aber fÃ¼llt sich, wenn man es grÃ¶ÃŸer macht?
 	//2. Warum muss Actionlistener (ganz unten) geaddet werden, damit der sich nicht beschwert
+	//3. bei dem "Add"-Fenster muss man immer Enter drücken, um Titel und ähnliches zu bestätigen
+		//Lösung: Focus listener, der reagiert wenn man von dem Feld weggeht
+	//4. Tabelle lässt sich durch "Aktualisieren" nicht refreshen, obwohl daten, aus "data" in MainFrame ankomme
+	
+	
+	
+	
 	
 	public MainFrame(){
 		setLayout(null);
@@ -91,27 +113,8 @@ public class MainFrame extends JFrame implements ActionListener{
 		
 	//Tabelle Alles
 	String[] titlesTable = {"Titel","Interpreten","Genre"};
-	
-	
-	ArrayList<Song> alleshier = new ArrayList<Song>();
 	alleshier = alles.getContent();
-	ArrayList<String> titles = new ArrayList<String>();
-	ArrayList<String> genra = new ArrayList<String>();
-	ArrayList<String> interpreters = new ArrayList<String>();
-	
-	String[] [] daten = new String [alleshier.size()] [3];
-	
-	for(int i = 0; i < alleshier.size(); i++) {
-		titles.add(alleshier.get(i).getTitle());
-		genra.add(alleshier.get(i).getGenre());
-		interpreters.add(alleshier.get(i).getInterpreter());
-	}
-	
-	for(int i = 0; i < titles.size(); i++) {
-		daten[i] [0] = titles.get(i);
-		daten[i] [1] = interpreters.get(i);
-		daten[i] [2] = genra.get(i);
-	}
+	daten = druckenTabelle(alleshier);
 	
 	
 	
@@ -133,7 +136,7 @@ public class MainFrame extends JFrame implements ActionListener{
 		
 	
 	//Tabelle suchen
-	String suche;
+/*	String suche;
 	String [] suchetitel = {"Suchergebnisse"};
 	String[] [] sucheergebnisse = new String[alleshier.size()] [1];
 	ArrayList<Song> gesuchteTitel = new ArrayList<Song>();
@@ -146,7 +149,7 @@ public class MainFrame extends JFrame implements ActionListener{
 	for(int i = 0; i < alleshier.size(); i++) {
 		sucheergebnisse [i] [0] = gesuchteTitel.get(i).getTitle();
 	}
-
+*/
 
 	
 
@@ -188,7 +191,8 @@ public class MainFrame extends JFrame implements ActionListener{
 			bAddMusic.setFont(f1);
 			bAddMusic.setAlignmentX(Component.LEFT_ALIGNMENT); //macht nichts, Knopf soll nach ganz links
 		
-		
+			bAktualisieren = new JButton("Aktualisieren");
+			bAktualisieren.setFont(f1);
 		
 			//Searchbar
 			searchbar = new JTextField("Was möchten sie suchen?");
@@ -202,7 +206,7 @@ public class MainFrame extends JFrame implements ActionListener{
 		tabelle = new JTable(daten, titlesTable);
 		tabelleinterpreten = new JTable(datainterpreten, interpretentitel);
 		tabellegenre = new JTable(datagenre, genratitel);
-		tabellesuchergebnisse = new JTable(sucheergebnisse,suchetitel);
+		//tabellesuchergebnisse = new JTable(sucheergebnisse,suchetitel);
 		
 		scroll = new JScrollPane(tabelle);
 		scroll.setBounds(10, 50, 760, 400);
@@ -230,11 +234,13 @@ public class MainFrame extends JFrame implements ActionListener{
 		menubar.add(genre);
 		menubar.add(interpreter);
 		menubar.add(bAddMusic);
+		menubar.add(bAktualisieren);
 		
 		
 		panelmenu.add(bAddMusic);
 		panelmenu.add(menubar);
 		panelmenu.add(searchbar);
+		panelmenu.add(bAktualisieren);
 		
 		
 		
@@ -253,6 +259,7 @@ public class MainFrame extends JFrame implements ActionListener{
 
 			public void actionPerformed(ActionEvent e) {
 				frame2.setVisible(true);
+				alles.testDruck();
 			}
 			
 		});
@@ -284,7 +291,7 @@ public class MainFrame extends JFrame implements ActionListener{
 		interpreter.addMenuListener(new MenuListener() {
 
 			public void menuCanceled(MenuEvent e) {
-					
+				
 			}
 			
 
@@ -298,7 +305,7 @@ public class MainFrame extends JFrame implements ActionListener{
 			@Override
 			public void menuSelected(MenuEvent e) {
 				scroll.setVisible(false);
-				scrollinterpreten.setVisible(true);
+				scrollinterpreten.setVisible(true);;
 				
 			}
 		});
@@ -310,9 +317,9 @@ public class MainFrame extends JFrame implements ActionListener{
 			
 			@Override
 			public void keyTyped(KeyEvent e) {
-				char a = e.getKeyChar();
+				/*char a = e.getKeyChar();
 				suche = Character.toString(a);
-				gesuchteTitel = alles.searchSong(suche);
+				gesuchteTitel = alles.searchSong(suche);*/
 				
 			}
 			
@@ -329,7 +336,20 @@ public class MainFrame extends JFrame implements ActionListener{
 			}
 		});
 		
+		bAktualisieren.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				alles.testDruck();
+				daten = druckenTabelle(data.getContent());
+				tabelle.repaint();
+				
+			}
+		});
+		
+		
 	}
+	
 	
 	
 
