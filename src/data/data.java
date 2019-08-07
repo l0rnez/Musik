@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import playlist.Playlist;
 import song.Song;
 
+
 public class data {
 	
-	public ArrayList<Song> content = new ArrayList<Song>();
+	public static ArrayList<Song> content = new ArrayList<Song>();
 	public String name;
 	
 	public data(String name) {
@@ -23,8 +24,12 @@ public class data {
 	
 	
 	
-	public ArrayList<Song> getContent() {
+	public static ArrayList<Song> getContent() {
 		return content;
+	}
+	
+	public static void setContent(ArrayList<Song> newcontent) {
+		content = newcontent;
 	}
 
 	//packt alle Interpreten in eine Liste
@@ -79,5 +84,15 @@ public class data {
 			}
 		}
 		return searchResults;
+	}
+	
+	//Testdruck aller Titel
+	public void testDruck() {
+		for(int i = 0; i < content.size(); i++) {
+			System.out.println(content.get(i).getTitle());
+			System.out.println(content.get(i).getInterpreter());
+			System.out.println(content.get(i).getGenre());
+			System.out.println("-------------");
+		}
 	}
 }
