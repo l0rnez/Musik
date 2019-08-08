@@ -7,6 +7,8 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -23,8 +25,12 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
+import javax.swing.table.DefaultTableModel;
 
 import Main.Musikverwaltung;
 import data.data;
@@ -47,6 +53,7 @@ public class MainFrame extends JFrame implements ActionListener{
 	
 	ArrayList<Song> alleshier = new ArrayList<Song>();
 	String[] [] daten = null;
+	Playlist keck = new Playlist("gay nay nay");
 	
 	
 	//Funktionen im GUI
@@ -83,12 +90,18 @@ public class MainFrame extends JFrame implements ActionListener{
 	
 	
 	//Probleme:
-	//1. Warum zum fick ist das Fenster leer, wenn man es Ã¶ffnet, aber fÃ¼llt sich, wenn man es grÃ¶ÃŸer macht?
-	//2. Warum muss Actionlistener (ganz unten) geaddet werden, damit der sich nicht beschwert
-	//3. bei dem "Add"-Fenster muss man immer Enter drücken, um Titel und ähnliches zu bestätigen
-		//Lösung: Focus listener, der reagiert wenn man von dem Feld weggeht
-	//4. Tabelle lässt sich durch "Aktualisieren" nicht refreshen, obwohl daten, aus "data" in MainFrame ankomme
+	//	X	1. Warum zum fick ist das Fenster leer, wenn man es Ã¶ffnet, aber fÃ¼llt sich, wenn man es grÃ¶ÃŸer macht?
 	
+	//	X	2. Warum muss Actionlistener (ganz unten) geaddet werden, damit der sich nicht beschwert
+	
+	//	O	3. bei dem "Add"-Fenster muss man immer Enter drücken, um Titel und ähnliches zu bestätigen
+			//Lösung: Focus listener, der reagiert wenn man von dem Feld weggeht
+	
+	//	X	4. Tabelle lässt sich durch "Aktualisieren" nicht refreshen, obwohl daten, aus "data" in MainFrame ankomme
+	//		Tabelle kriegt die Daten nicht
+	//		Daten werden aber in "daten" übernommen
+	
+	//	X	5. Tabellen Listener macht alles 2 Mal, wird problematisch beim Sound abspielen
 	
 	
 	
@@ -342,7 +355,40 @@ public class MainFrame extends JFrame implements ActionListener{
 			public void actionPerformed(ActionEvent e) {
 				alles.testDruck();
 				daten = druckenTabelle(data.getContent());
-				tabelle.repaint();
+				//tabelle.revalidate();
+				//scroll.revalidate();
+				
+				//tabelle.repaint();
+				//scroll.repaint();
+				
+				//scroll.setBounds(10, 50, 800, 500);
+				
+				//tabelle.tableChanged(TableModelEvent);
+				
+				tabelle.invalidate();
+				scroll.repaint();
+				
+				System.out.println(tabelle.getColumnCount()); //Tabelle kreigt die Daten net
+				System.out.println(daten[2][1]);
+				System.out.println(daten[0][0]);
+				try {
+					System.out.println(daten[3][0]);
+				}
+				finally{
+					System.out.println("net da");
+				}
+			}
+		});
+		
+		
+		//Tabelle Listener für Zeilen
+		tabelle.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if(tabelle.getSelectedRow() > -1) {
+					System.out.println(tabelle.getValueAt(tabelle.getSelectedRow(), 0).toString());
+				}
 				
 			}
 		});
