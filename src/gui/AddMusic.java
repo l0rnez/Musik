@@ -107,9 +107,8 @@ public class AddMusic extends JFrame implements ActionListener{
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			alles.content.add(new Song(title, interpreter, genre));
+			data.content.add(new Song(title, interpreter, genre));
 			alles.testDruck();
-			data.setContent(alles.content);
 		}
 	});
 	
