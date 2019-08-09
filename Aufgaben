@@ -1,9 +1,18 @@
--GUI
--Sortieralgorithmen: der Playlists, nach Genre, Interpret, etc.
--automatische Erstellung von Playlisten nach bestimmten Kriterien, z.B. Interpret
--Searchbar im GUI
--Abspielen von Titeln wenn man diese anklickt im GUI
--Hinzufügen von Titeln via das "Add"-Knopfes
--Playlisten per Hand erstellen können
--Interpreten- und Genreliste richtig anzeigen lassen (Listen verschwinden, wenn man irgendwo im Fenster hinklickt)
+- GUI
+- Sortieralgorithmen: der Playlists, nach Genre, Interpret, etc.
+- automatische Erstellung von Playlisten nach bestimmten Kriterien, z.B. Interpret
+- Searchbar im GUI
+- Abspielen von Titeln wenn man diese anklickt im GUI
+- Hinzufügen von Titeln via das "Add"-Knopfes
+- Playlisten per Hand erstellen können
+- Interpreten- und Genreliste richtig anzeigen lassen (Listen verschwinden, wenn man irgendwo im Fenster hinklickt)
 
+
+Aufgaben-Update:
+- memory
+- play/pause/stop
+- Tabelle
+- Playlisterstellung
+- Suchleiste
+- Shuffle modus
+- Deckblatt
