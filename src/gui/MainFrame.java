@@ -39,7 +39,7 @@ import playlist.Playlist;
 import gui.AddMusic;
 
 public class MainFrame extends JFrame implements ActionListener{
-	private JButton bAktualisieren, bAddMusic;
+	private JButton bAktualisieren, bAddMusic,play,pause,stop;
 	private JLabel label1;
 	private JFrame jframe1;
 	private JTable tabelle, tabelleinterpreten, tabellegenre, tabellesuchergebnisse;
@@ -48,6 +48,12 @@ public class MainFrame extends JFrame implements ActionListener{
 	private JMenuBar menubar;
 	private JTextField searchbar;
 	private JScrollPane scroll, scrollinterpreten, scrollgenre, scrollsuche;
+	private JProgressBar fortschritt;
+	int songl�nge=15;//Beispiel eig. �ber song.getl�nge
+	Timer t1 = new Timer();
+	Timer t2 = new Timer();
+	boolean zpause=false;
+	boolean t1runs=false,t2runs=false;//Zwischenpause
 	
 	
 	
@@ -81,25 +87,25 @@ public class MainFrame extends JFrame implements ActionListener{
 	
 	
 	
-	AddMusic frame2 = new AddMusic();  //k�nnte man eventuell anders l�sen
+	AddMusic frame2 = new AddMusic();  //könnte man eventuell anders lösen
 	
-	//alles Musik st�cke
+	//alles Musik stücke
 	data alles = new data("Alles");
 	
 
 	
 	
 	//Probleme:
-	//	X	1. Warum zum fick ist das Fenster leer, wenn man es öffnet, aber füllt sich, wenn man es größer macht?
+	//	X	1. Warum zum fick ist das Fenster leer, wenn man es Ã¶ffnet, aber fÃ¼llt sich, wenn man es grÃ¶ÃŸer macht?
 	
 	//	X	2. Warum muss Actionlistener (ganz unten) geaddet werden, damit der sich nicht beschwert
 	
-	//	O	3. bei dem "Add"-Fenster muss man immer Enter dr�cken, um Titel und �hnliches zu best�tigen
-			//L�sung: Focus listener, der reagiert wenn man von dem Feld weggeht
+	//	O	3. bei dem "Add"-Fenster muss man immer Enter drücken, um Titel und ähnliches zu bestätigen
+			//Lösung: Focus listener, der reagiert wenn man von dem Feld weggeht
 	
-	//	X	4. Tabelle l�sst sich durch "Aktualisieren" nicht refreshen, obwohl daten, aus "data" in MainFrame ankomme
+	//	X	4. Tabelle lässt sich durch "Aktualisieren" nicht refreshen, obwohl daten, aus "data" in MainFrame ankomme
 	//		Tabelle kriegt die Daten nicht
-	//		Daten werden aber in "daten" �bernommen
+	//		Daten werden aber in "daten" übernommen
 	
 	//	X	5. Tabellen Listener macht alles 2 Mal, wird problematisch beim Sound abspielen
 	
@@ -187,7 +193,7 @@ public class MainFrame extends JFrame implements ActionListener{
 		menubar = new JMenuBar();
 		//menubar.setBounds(10, 10, 770, 50);
 		
-			//Menüpunkte
+			//MenÃ¼punkte
 			songs = new JMenu("Songs");
 			songs.setFont(f1);
 			
@@ -208,7 +214,7 @@ public class MainFrame extends JFrame implements ActionListener{
 			bAktualisieren.setFont(f1);
 		
 			//Searchbar
-			searchbar = new JTextField("Was m�chten sie suchen?");
+			searchbar = new JTextField("Was möchten sie suchen?");
 			//mouselistener damit bei klick der Text "was mchten sie..." verschwindet
 			
 			
@@ -241,7 +247,7 @@ public class MainFrame extends JFrame implements ActionListener{
 		
 		
 		
-		//Einfügen ins Fenster
+		//EinfÃ¼gen ins Fenster
 		menubar.add(songs);   //schauen ob das alle in eine Zeile geht
 		menubar.add(playlists);
 		menubar.add(genre);
@@ -255,6 +261,126 @@ public class MainFrame extends JFrame implements ActionListener{
 		panelmenu.add(searchbar);
 		panelmenu.add(bAktualisieren);
 		
+	
+//Start Leon
+		JPanel Player = new JPanel();
+		Player.setBounds(10, 450, 760, 80);
+		Player.setLayout(new FlowLayout());
+		Player.setBackground(Color.white);
+		
+		fortschritt = new JProgressBar(0,songl�nge);	//playleiste
+		fortschritt.setValue(0);
+		fortschritt.setStringPainted(true);
+		fortschritt.setPreferredSize(new Dimension(480,50));
+		fortschritt.setSize(getPreferredSize());
+		
+		play = new JButton();
+		play.setOpaque(false);
+		play.setContentAreaFilled(false);
+		play.setBorderPainted(false);
+		play.setIcon(new ImageIcon("play.png"));
+		play.addActionListener(new ActionListener() 
+		{
+			
+				public void actionPerformed(ActionEvent ae)
+				{
+					t1 = new Timer();
+					if(!zpause && t1runs==false)
+					{
+							if(fortschritt.getValue()<=songl�nge)
+							{
+								t1.scheduleAtFixedRate(new TimerTask() 
+								{
+	
+									@Override
+									public void run() 
+									{
+										t1runs=true;
+										fortschritt.setValue(fortschritt.getValue()+1);
+										if(fortschritt.getValue() == songl�nge)
+										{
+											fortschritt.setValue(0);
+											t1.cancel();
+											t1runs=false;
+										}
+									}
+									
+								}, fortschritt.getValue(), 1000);
+							}
+			
+					}
+					
+						if(zpause && t2runs==false)
+						{
+							t2 = new Timer();
+							if(fortschritt.getValue()<=songl�nge)
+							{
+								
+								t2.scheduleAtFixedRate(new TimerTask() 
+								{
+	
+									@Override
+									public void run() 
+									{
+										t2runs=true;
+										fortschritt.setValue(fortschritt.getValue()+1);
+										if(fortschritt.getValue() == songl�nge)
+										{
+											fortschritt.setValue(0);
+											t2.cancel();
+											t2runs=false;
+										}
+									}
+									
+								}, fortschritt.getValue(), 1000);
+							
+						
+							}
+						}
+				}
+		});
+		
+		pause = new JButton();
+		pause.setOpaque(false);
+		pause.setContentAreaFilled(false);
+		pause.setBorderPainted(false);
+		pause.setIcon(new ImageIcon("pause.png"));
+		pause.addActionListener(new ActionListener()
+				{
+					
+					public void actionPerformed(ActionEvent ae)
+					{
+						zpause=true;
+						t1.cancel();
+						t2.cancel();
+						t1runs=false;
+						t2runs=false;
+					}
+				});
+		
+		stop = new JButton();
+		stop.setOpaque(false);
+		stop.setContentAreaFilled(false);
+		stop.setBorderPainted(false);
+		stop.setIcon(new ImageIcon("stop.png"));
+		stop.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent ae)
+			{
+				fortschritt.setValue(0);
+				t1.cancel();
+				t2.cancel();
+				t1runs=false;
+				t2runs=false;
+			}
+		});
+		
+	
+		
+		Player.add(play);
+		Player.add(pause);
+		Player.add(fortschritt);
+		Player.add(stop);
 		
 		
 		
@@ -264,6 +390,7 @@ public class MainFrame extends JFrame implements ActionListener{
 		add(scrollinterpreten);
 		add(scrollgenre);
 		add(panelmenu);
+		add(Player);
 		
 		
 		
@@ -381,7 +508,7 @@ public class MainFrame extends JFrame implements ActionListener{
 		});
 		
 		
-		//Tabelle Listener f�r Zeilen
+		//Tabelle Listener für Zeilen
 		tabelle.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			
 			@Override
