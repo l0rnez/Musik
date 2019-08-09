@@ -108,23 +108,6 @@ public class Playlist {
 		});
 	}
 	
-	
-	
-	public void playSound() {
-		try {
-		      File file = new File("./sound.wav");
-		      AudioInputStream stream = AudioSystem.getAudioInputStream(file);
-		      Clip clip = AudioSystem.getClip();
-		      clip.open(stream);
-		      clip.start();
-		      Thread.sleep(500);
-		      stream.close();
-		 
-		    } catch (Exception ex) {
-		      System.out.println(ex.getMessage());
-		    }
-	}
-
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder(name + "\n");

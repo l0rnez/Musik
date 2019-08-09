@@ -3,6 +3,7 @@ package gui;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.ComponentOrientation;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -12,7 +13,10 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,6 +26,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -49,7 +54,7 @@ public class MainFrame extends JFrame implements ActionListener{
 	private JTextField searchbar;
 	private JScrollPane scroll, scrollinterpreten, scrollgenre, scrollsuche;
 	private JProgressBar fortschritt;
-	int songl�nge=15;//Beispiel eig. �ber song.getl�nge
+	int songlaenge=15;//Beispiel eig. �ber song.getl�nge
 	Timer t1 = new Timer();
 	Timer t2 = new Timer();
 	boolean zpause=false;
@@ -268,7 +273,7 @@ public class MainFrame extends JFrame implements ActionListener{
 		Player.setLayout(new FlowLayout());
 		Player.setBackground(Color.white);
 		
-		fortschritt = new JProgressBar(0,songl�nge);	//playleiste
+		fortschritt = new JProgressBar(0,songlaenge);	//playleiste
 		fortschritt.setValue(0);
 		fortschritt.setStringPainted(true);
 		fortschritt.setPreferredSize(new Dimension(480,50));
@@ -287,7 +292,7 @@ public class MainFrame extends JFrame implements ActionListener{
 					t1 = new Timer();
 					if(!zpause && t1runs==false)
 					{
-							if(fortschritt.getValue()<=songl�nge)
+							if(fortschritt.getValue()<=songlaenge)
 							{
 								t1.scheduleAtFixedRate(new TimerTask() 
 								{
@@ -297,7 +302,7 @@ public class MainFrame extends JFrame implements ActionListener{
 									{
 										t1runs=true;
 										fortschritt.setValue(fortschritt.getValue()+1);
-										if(fortschritt.getValue() == songl�nge)
+										if(fortschritt.getValue() == songlaenge)
 										{
 											fortschritt.setValue(0);
 											t1.cancel();
@@ -313,7 +318,7 @@ public class MainFrame extends JFrame implements ActionListener{
 						if(zpause && t2runs==false)
 						{
 							t2 = new Timer();
-							if(fortschritt.getValue()<=songl�nge)
+							if(fortschritt.getValue()<=songlaenge)
 							{
 								
 								t2.scheduleAtFixedRate(new TimerTask() 
@@ -324,7 +329,7 @@ public class MainFrame extends JFrame implements ActionListener{
 									{
 										t2runs=true;
 										fortschritt.setValue(fortschritt.getValue()+1);
-										if(fortschritt.getValue() == songl�nge)
+										if(fortschritt.getValue() == songlaenge)
 										{
 											fortschritt.setValue(0);
 											t2.cancel();
