@@ -521,7 +521,7 @@ public class MainFrame extends JFrame implements ActionListener{
 				if(tabelle.getSelectedRow() > -1) {
 					System.out.println(tabelle.getValueAt(tabelle.getSelectedRow(), 0).toString());
 				}
-				
+				data.content.get(0).playSound();
 			}
 		});
 		

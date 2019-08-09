@@ -11,7 +11,6 @@ public class Song {
 	String title;
 	String interpreter;
 	String genre;
-	
 
 	public Song(String title, String interpreter, String genre) {
 		this.title = title;
@@ -45,7 +44,9 @@ public class Song {
 	
 	public void playSound() {
 		try {
-		      File file = new File("./sound.wav");
+		      File file = new File("./soundsource/" + title + "-" + interpreter + "-" + genre + ".wav");
+//		      File file = new File("./123.wav");
+//		      File file = new File("./soundsource/123.wav");
 		      AudioInputStream stream = AudioSystem.getAudioInputStream(file);
 		      Clip clip = AudioSystem.getClip();
 		      clip.open(stream);

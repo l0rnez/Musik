@@ -15,7 +15,6 @@ public class Musikverwaltung{
 		
 		
 		MainFrame frame = new MainFrame();
-		
 		/*
 		System.out.println("Suche: ");
 		Scanner scanner = new Scanner(System.in);
